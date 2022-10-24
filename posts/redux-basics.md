@@ -1,3 +1,14 @@
+---
+title: 'Redux api calling with RTK Query'
+metaTitle: 'Redux api calling with RTK Query'
+metaDesc: 'We will learn how to connect server with react client using redux and rtk'
+socialImage: images/redux.jpg
+date: '2022-10-24'
+tags:
+  - react
+  - redux
+  - RTK query
+---
 ## Configure Store.js
 
 ```
