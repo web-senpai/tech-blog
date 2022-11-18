@@ -1,5 +1,5 @@
 ---
-title: 'Redux and Redux toolkit advanced with axios'
+title: 'Redux and Redux toolkit advanced crud'
 metaTitle: 'Redux and Redux toolkit advanced with axios'
 metaDesc: 'We will learn how to configure advanced features of  redux toolkit'
 socialImage: images/redux.jpg
