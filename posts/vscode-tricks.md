@@ -24,7 +24,6 @@ tags:
 + **Ctrl + [** - Outdent lines
 + **Ctrl + Alt + ->** - Move code to new tab group
 
-<hr>
 
 ## Top Vscode Extentions
 
