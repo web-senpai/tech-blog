@@ -1,5 +1,5 @@
 ---
-title: 'Node.js rest api using mysql and sequelize orm'
+title: 'Decoding Sequelize: An In-Depth Exploration of ORMs for Beginner Developers'
 metaTitle: 'Node.js rest api using mysql and sequelize orm'
 metaDesc: 'We will create rest api using sequelize orm and mysql database usin exress.js'
 socialImage: images/sequelize.png

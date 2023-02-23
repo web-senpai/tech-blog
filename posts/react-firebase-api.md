@@ -1,5 +1,5 @@
 ---
-title: 'Consume Rest Api using react.js'
+title: 'CUnlocking the Power of React and Firebase: A Guide to Secure Authentication'
 metaTitle: 'Consume Rest Api using react.js'
 metaDesc: 'We will consume rest api in React using Redux toolkit and RTK query'
 socialImage: images/react.jpg

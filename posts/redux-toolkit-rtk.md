@@ -1,5 +1,5 @@
 ---
-title: 'Redux and Redux toolkit with rtk query'
+title: 'Modernizing Redux: The Bits and Pieces You Need for Beginner-Friendly Development'
 metaTitle: 'Redux and Redux toolkit with rtk query'
 metaDesc: 'We will learn how to use crud operations with redux and rtk query'
 socialImage: images/redux.jpg

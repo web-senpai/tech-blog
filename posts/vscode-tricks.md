@@ -1,5 +1,5 @@
 ---
-title: 'VsCode Tips and Tricks'
+title: 'Mastering VS Code: Sneaky Tips and Tricks for Beginner Coders'
 metaTitle: 'VsCode Tips and Tricks'
 metaDesc: 'We will learn how vscode makes life easy'
 socialImage: images/react.jpg
@@ -8,26 +8,25 @@ tags:
  -vscode
 ---
 
-# Keyboard shortcuts
-Ctrl + G :: Goto line
-Ctrl + Alt + l :: console log(turbo space)
-Alt + Shift + d :: console log delete(turbo space)
-Alt + Shift + u :: console log uncomment(turbo space)
-Alt + Shift + c :: console log comment(turbo space)
-Alt + ↑ :: take line to upper
-Alt + ↓ :: take line to upper
-Ctrl + L :: select whole line
-Ctrl + Shift +L :: select all occurance
-Ctrl + Alt // Alt + mouse click :: select multiple lines
-Alt + Shift + ↑// Alt + Shift + ↓ :: copy line above or down
-Ctrl + ] :: Indent lines
-Ctrl + [ :: Outdent lines
-Ctrl + Alt + -> :: move coe to new tab group
+## Keyboard shortcuts
++ **Ctrl + G>** - Goto line
++ **Ctrl + Alt +  l** - Console log (turbo space)
++ **Alt + Shift + d** - Console log delete (turbo space)
++ **Alt + Shift + u** - Console log uncomment (turbo space)
++ **Alt + Shift + c** - Console log comment (turbo space)
++ **Alt + ↑** - Take line to upper
++ **Alt + ↓** - Take line to lower
++ **Ctrl + L** - Select whole line
++ **Ctrl + Shift + L** - Select all occurrence
++ **Ctrl + Alt + / or Alt + mouse click** - Select multiple lines
++ **Alt + Shift + ↑ or Alt + Shift + ↓** - Copy line above or down
++ **Ctrl + ]** - Indent lines
++ **Ctrl + [** - Outdent lines
++ **Ctrl + Alt + ->** - Move code to new tab group
 
+<hr>
 
-
-
-# Top Vscode Extentions
+## Top Vscode Extentions
 
 ## Themes
 1. Dracula official
