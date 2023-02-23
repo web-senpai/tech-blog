@@ -4,18 +4,25 @@ metaTitle: 'React Tricks and Tips'
 metaDesc: 'We will learn some handy react tricks'
 socialImage: images/react.jpg
 date: '2022-08-16'
+published: false
 tags:
   - react
 ---
+
 # Commands to get started
+
 ### create new application
+
 ```
 npx create-react-app projectname
 ```
+
 ### routing
+
 ```
 npm i react-router-dom
 ```
+
 ## State Management
 
 ### Redux
@@ -23,6 +30,7 @@ npm i react-router-dom
 ## Styling
 
 ### Tailwind
+
 ```
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p

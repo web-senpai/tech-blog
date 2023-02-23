@@ -4,13 +4,16 @@ metaTitle: 'Redux and Redux toolkit advanced with forms'
 metaDesc: 'We will learn how to configure advanced features of  redux toolkit'
 socialImage: images/redux.jpg
 date: '2022-10-24'
+published: false
 tags:
   - react
   - redux
   - redux toolkit
   - blog
 ---
+
 # Introduction
+
 Redux toolkit advanced setup,almost a mini blog app, without api just create and read post with reaction and author names.
 
 ## Commands to get started
@@ -21,9 +24,10 @@ npm i react-redux
 npm i date-fns
 ```
 
-
 # Step 1: Create Store
+
 we need to introducer global state by using reducer here
+
 ```
 import { configureStore } from "@reduxjs/toolkit";
 import postsReducer from '../features/posts/postsSlice';
@@ -37,7 +41,6 @@ export const store = configureStore({
     }
 })
 ```
-
 
 # Step 2: Use provider in index.js
 
@@ -165,6 +168,7 @@ export default usersSlice.reducer
 # Step 4: USe the global states now in components
 
 Now let's go through file intro,
+
 <ol>
 <li> we need <strong>postform</strong> for creating new post </li>
 <li> we need <strong>postlist</strong> for viewing created post </li>
@@ -177,15 +181,14 @@ Bonus Features::
 <li>another added feature is sorting the post by latest entry</li>
 </ul>
 
-
-
 ### PostForm
+
 First we fetched all authors so that we can add them in select list using <strong> selectAllUsers</strong>
-We then mapped author names in  <strong> userOptions </strong>
+We then mapped author names in <strong> userOptions </strong>
 We used states so that we can track values while filling forms
 We tracked changes using e.target.value and set them to their states
 We saved post when title and content is not empty and called dispatch <strong> postAdded</strong> and cleared values afterwards
-We disabled the save button until all value are selected using <strong>canSave </strong> boolean 
+We disabled the save button until all value are selected using <strong>canSave </strong> boolean
 
 ```
 import { useState } from "react";
@@ -261,9 +264,10 @@ const AddPostForm = () => {
 export default AddPostForm
 ```
 
-
 ### PostAuthor
+
 we got state values from <strong> selectAllUsers </strong> , if user is missing we used ternary operator to set unknown author
+
 ```
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
@@ -279,7 +283,9 @@ export default PostAuthor
 ```
 
 ### PostList
+
 we got state values from <strong> selectAllPosts </strong> , we sorted posts by latest date mapped all data values
+
 ```
 import { useSelector } from "react-redux";
 import { selectAllPosts } from "./postsSlice";
@@ -316,8 +322,10 @@ export default PostsList
 
 ## Helper Files
 
-### ReactionButtons 
+### ReactionButtons
+
 For operations of reactions
+
 ```
 import { useDispatch } from "react-redux";
 import { reactionAdded } from "./postsSlice";
@@ -354,7 +362,9 @@ export default ReactionButtons
 ```
 
 ### TimeAgo
+
 For time ago feature
+
 ```
 import { parseISO, formatDistanceToNow } from 'date-fns';
 

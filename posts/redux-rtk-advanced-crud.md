@@ -4,6 +4,7 @@ metaTitle: 'Redux and Redux toolkit with rtk query'
 metaDesc: 'We will learn how to use crud operations with redux and rtk query'
 socialImage: images/redux.jpg
 date: '2022-10-24'
+published: false
 tags:
   - react
   - redux
@@ -13,6 +14,7 @@ tags:
 ---
 
 # store
+
 ```
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from '../features/api/apiSlice';
@@ -28,7 +30,9 @@ export const store = configureStore({
 ```
 
 # apiSlice
+
 api slce extends all api functions
+
 ```
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -41,7 +45,9 @@ export const apiSlice = createApi({
 ```
 
 # postSlice
+
 call api here
+
 ```
 import {
     createSelector,
@@ -203,7 +209,9 @@ export const {
 ```
 
 # postList
+
 read posts
+
 ```
 import { useSelector } from "react-redux";
 import { selectPostIds } from "./postsSlice";
@@ -239,7 +247,9 @@ export default PostsList
 ```
 
 ### postexcerpt
+
 helper parts for postlist
+
 ```
 import PostAuthor from "./PostAuthor";
 import TimeAgo from "./TimeAgo";
@@ -270,7 +280,9 @@ export default PostsExcerpt
 ```
 
 ### postAuhtor
+
 show author who posted the post
+
 ```
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
@@ -287,8 +299,11 @@ const PostAuthor = ({ userId }) => {
 }
 export default PostAuthor
 ```
+
 ### timeago
+
 show how much time ago post was created
+
 ```
 import { parseISO, formatDistanceToNow } from 'date-fns';
 
@@ -310,7 +325,9 @@ export default TimeAgo
 ```
 
 ### reactionbuttons
+
 react to a post
+
 ```
 import { useAddReactionMutation } from './postsSlice'
 
@@ -347,7 +364,9 @@ export default ReactionButtons
 ```
 
 # Singlepost
+
 get single post
+
 ```
 import { useSelector } from 'react-redux'
 import { selectPostById } from './postsSlice'
@@ -388,8 +407,11 @@ const SinglePostPage = () => {
 
 export default SinglePostPage
 ```
+
 # addpost
+
 add posts
+
 ```
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -474,7 +496,9 @@ export default AddPostForm
 ```
 
 # editpost
+
 edit and delete posts
+
 ```
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -591,7 +615,9 @@ const EditPostForm = () => {
 
 export default EditPostForm
 ```
+
 # userSlice
+
 ```
 import {
     createSelector,
@@ -639,8 +665,11 @@ export const {
     // Pass in a selector that returns the posts slice of state
 } = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState)
 ```
+
 ### userlist
+
 read users
+
 ```
 import { useSelector } from 'react-redux'
 import { selectAllUsers } from './usersSlice'
@@ -668,7 +697,9 @@ export default UsersList
 ```
 
 ### userpage
+
 show users
+
 ```
 import { useSelector } from 'react-redux'
 import { selectUserById } from '../users/usersSlice'

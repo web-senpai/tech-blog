@@ -4,6 +4,7 @@ metaTitle: 'Redux and Redux toolkit with rtk query'
 metaDesc: 'We will learn how to use crud operations with redux and rtk query'
 socialImage: images/redux.jpg
 date: '2022-10-24'
+published: false
 tags:
   - react
   - redux
@@ -12,6 +13,7 @@ tags:
 ---
 
 # Introduction
+
 Todo app with redux and rtk query
 
 ```
@@ -19,7 +21,9 @@ npm i @reduxjs/toolkit
 ```
 
 # apiSlice
+
 we call the backend api here.
+
 ```
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -68,7 +72,8 @@ export const {
 } = apiSlice
 ```
 
-# todList 
+# todList
+
 we show todo list here by frtching data from api
 
 ```
@@ -158,6 +163,7 @@ export default TodoList
 ```
 
 # index.js
+
 wrapping the app inside provider so that we can accsess states everywhere
 
 ```

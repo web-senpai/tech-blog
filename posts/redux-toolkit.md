@@ -4,12 +4,15 @@ metaTitle: 'Redux and Redux toolkit basics'
 metaDesc: 'We will learn how to configure basic redux toolkit'
 socialImage: images/redux.jpg
 date: '2022-10-24'
+published: false
 tags:
   - react
   - redux
   - redux toolkit
 ---
+
 # Introduction
+
 Redux toolkit basic setup
 
 ## Commands to get started
@@ -19,9 +22,10 @@ npm i @reduxjs/toolkit
 npm i react-redux
 ```
 
-
 # Step 1: Create Store
+
 we need to introducer global state by using reducer here
+
 ```
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from '../features/counter/counterSlice';
@@ -54,7 +58,8 @@ ReactDOM.render(
 ```
 
 # Step 3: Create slices
-Intiaalstate is states default values , we use the same name introduced here in createslice in store.js.In reducers we implement actions(acts like functions). 
+
+Intiaalstate is states default values , we use the same name introduced here in createslice in store.js.In reducers we implement actions(acts like functions).
 
 ```
 
@@ -91,9 +96,11 @@ export default counterSlice.reducer;
 # Step 4: USe the global states now in components
 
 ### UseSelector
+
 We need this to get state values from store
 
 ### UseDispatch
+
 We need this to call actions, syntax is dispatch(methodName())
 
 ```

@@ -4,6 +4,7 @@ metaTitle: 'Consume Rest Api using react.js'
 metaDesc: 'We will consume rest api in React using Redux toolkit and RTK query'
 socialImage: images/react.jpg
 date: '2022-08-16'
+published: true
 tags:
   - nodejs
   - sequelize
@@ -12,21 +13,24 @@ tags:
   - orm
   - rest api
 ---
+
 # React with Redux
+
 Today we will learn how to consume rest api in react using redux toolkit and rtk query.We will follow the best practices to implement this task. So have patience and read carefully.If it feels overwhelming at first don't worry all your confusions will be cleared in summary section. Things we need to implement that:
+
 - Redux toolkit
 - React bootstrap
 - RTK Query
 
-
 ## Step 1: Design Common components
 
 ### components/Header.js
+
 ```js
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../features/auth/authSlice';
+import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
 function Header() {
   const navigate = useNavigate();
@@ -36,30 +40,30 @@ function Header() {
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
-    navigate("/");
+    navigate('/');
   };
 
   return (
-    <header className="header">
-      <div className="logo">
-        <Link to="/">Video Api</Link>
+    <header className='header'>
+      <div className='logo'>
+        <Link to='/'>Video Api</Link>
       </div>
       <ul>
         {user ? (
           <li>
-            <button className="btn" onClick={onLogout}>
+            <button className='btn' onClick={onLogout}>
               <FaSignOutAlt /> Logout
             </button>
           </li>
         ) : (
           <>
             <li>
-              <Link to="/login">
+              <Link to='/login'>
                 <FaSignInAlt /> Login
               </Link>
             </li>
             <li>
-              <Link to="/register">
+              <Link to='/register'>
                 <FaUser /> Register
               </Link>
             </li>
@@ -71,22 +75,20 @@ function Header() {
 }
 
 export default Header;
-
 ```
 
 ### components/Spinner.js
 
 ```js
 function Spinner() {
-    return (
-      <div className='loadingSpinnerContainer'>
-        <div className='loadingSpinner'></div>
-      </div>
-    )
-  }
-  
-  export default Spinner
-  
+  return (
+    <div className='loadingSpinnerContainer'>
+      <div className='loadingSpinner'></div>
+    </div>
+  );
+}
+
+export default Spinner;
 ```
 
 ## Step 2: Create Components
@@ -94,78 +96,71 @@ function Spinner() {
 ### pages/login.jsx
 
 ```js
-import { useState, useEffect } from 'react'
-import { FaSignInAlt } from 'react-icons/fa'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { login, reset } from '../features/auth/authSlice'
-import Spinner from '../components/Spinner'
-import { useFormik ,Formik,ErrorMessage} from "formik";
+import { useState, useEffect } from 'react';
+import { FaSignInAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login, reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
+import { useFormik, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
 
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-  })
+  });
 
-  const { email, password } = formData
+  const { email, password } = formData;
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  )
-  
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
+
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message);
     }
 
     if (isSuccess || user) {
-      navigate('/')
+      navigate('/');
     }
 
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-
-  
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const userData = {
       email,
       password,
-    }
-    dispatch(login(userData))
-  }
-  
-  
+    };
+    dispatch(login(userData));
+  };
+
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
-  
+
   return (
     <>
       <section className='heading log'>
         <h1>
-          <FaSignInAlt className='alignIcon'/> Sign In
+          <FaSignInAlt className='alignIcon' /> Sign In
         </h1>
       </section>
 
       <section className='form'>
-            
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <input
@@ -195,80 +190,75 @@ function Login() {
             </button>
           </div>
         </form>
-        
       </section>
     </>
-  )
+  );
 }
 
-export default Login
-
+export default Login;
 ```
 
 ### pages/register.jsx
 
 ```js
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { FaUser } from 'react-icons/fa'
-import { register, reset } from '../features/auth/authSlice'
-import Spinner from '../components/Spinner'
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { FaUser } from 'react-icons/fa';
+import { register, reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
 
 function Register() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     password2: '',
-  })
+  });
 
-  const {  email, password, password2 } = formData
+  const { email, password, password2 } = formData;
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  )
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message);
     }
 
     if (isSuccess || user) {
-      navigate('/')
+      navigate('/');
     }
 
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== password2) {
-      toast.error('Passwords do not match')
+      toast.error('Passwords do not match');
     } else {
       const userData = {
-    
         email,
         password,
-      }
-      console.log(userData)
-      dispatch(register(userData))
+      };
+      console.log(userData);
+      dispatch(register(userData));
     }
-  }
+  };
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   return (
@@ -282,7 +272,6 @@ function Register() {
 
       <section className='form'>
         <form onSubmit={onSubmit}>
-  
           <div className='form-group'>
             <input
               type='email'
@@ -324,22 +313,21 @@ function Register() {
         </form>
       </section>
     </>
-  )
+  );
 }
 
-export default Register
-
+export default Register;
 ```
 
 ### pages/Dashboard.jsx
 
 ```js
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import VideoForm from "../components/VideoForm";
-import VideoTable from "../components/VideoTable";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import VideoForm from '../components/VideoForm';
+import VideoTable from '../components/VideoTable';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -348,19 +336,19 @@ function Dashboard() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate('/login');
     }
   }, [user, navigate]);
 
   const [id, setId] = useState();
-  const [update,setUpdate] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [inputField, setInputField] = useState({
-    title: "",
-    category: "",
-    description: "",
-    avg_sessiontime: "",
-    video_duration: "",
-    video_url: "",
+    title: '',
+    category: '',
+    description: '',
+    avg_sessiontime: '',
+    video_duration: '',
+    video_url: '',
   });
 
   return (
@@ -373,27 +361,27 @@ function Dashboard() {
         setUpdate={setUpdate}
       />
 
-      <VideoTable setInputField={setInputField} setId={setId} setUpdate={setUpdate}/>
+      <VideoTable setInputField={setInputField} setId={setId} setUpdate={setUpdate} />
     </>
   );
 }
 
 export default Dashboard;
-
 ```
 
 ## Step 3: Setup Routes
 
 ### App.js
+
 ```js
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import Dashboard from './pages/Dashboard'
-import Header from './components/Header'
-import Register from './pages/Register'
-import Login from './pages/Login'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './pages/Dashboard';
+import Header from './components/Header';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 import './App.css';
 function App() {
@@ -411,80 +399,71 @@ function App() {
       </Router>
       <ToastContainer />
     </>
-  )
+  );
 }
 
-export default App
-
+export default App;
 ```
 
 ## Step 4: Setup Firebase Config
 
 ### app/config/firebase-config.js
+
 ```js
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZVABn8_f9gwtNYhtDaHB-DANiu23zVzU",
-  authDomain: "fir-auth-79a7f.firebaseapp.com",
-  projectId: "fir-auth-79a7f",
-  storageBucket: "fir-auth-79a7f.appspot.com",
-  messagingSenderId: "769965611733",
-  appId: "1:769965611733:web:471202fab28b0123a9605c"
+  apiKey: 'AIzaSyBZVABn8_f9gwtNYhtDaHB-DANiu23zVzU',
+  authDomain: 'fir-auth-79a7f.firebaseapp.com',
+  projectId: 'fir-auth-79a7f',
+  storageBucket: 'fir-auth-79a7f.appspot.com',
+  messagingSenderId: '769965611733',
+  appId: '1:769965611733:web:471202fab28b0123a9605c',
 };
 
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-
 ```
 
 ## Step 5: Setup Redux Store
+
 ### app/store.js
 
 ```js
-import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import { apiSlice } from '../features/api/apiSlice'
-import authReducer from '../features/auth/authSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { apiSlice } from '../features/api/apiSlice';
+import authReducer from '../features/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
-})
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
+});
 
-setupListeners(store.dispatch)
-
+setupListeners(store.dispatch);
 ```
 
 ## Step 6: Setup AuthSlice
 
 ### authservice.js
+
 ```js
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { auth } from "../../app/configs/firebase-config";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth } from '../../app/configs/firebase-config';
 
 const register = async (userData) => {
   const registerEmail = userData.email;
   const registerPassword = userData.password;
-  const userInfo = await createUserWithEmailAndPassword(
-    auth,
-    registerEmail,
-    registerPassword
-  );
+  const userInfo = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
 
   let token = await userInfo.user.getIdToken();
   console.log(token);
-  localStorage.setItem("user", token);
+  localStorage.setItem('user', token);
 
   const user = userInfo.user.email;
   return user;
@@ -493,14 +472,10 @@ const register = async (userData) => {
 const login = async (userData) => {
   const loginEmail = userData.email;
   const loginPassword = userData.password;
-  const userInfo = await signInWithEmailAndPassword(
-    auth,
-    loginEmail,
-    loginPassword
-  );
+  const userInfo = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
   let token = await userInfo.user.getIdToken();
   console.log(token);
-  localStorage.setItem("user", token);
+  localStorage.setItem('user', token);
 
   const user = userInfo.user.email;
   return user;
@@ -508,7 +483,7 @@ const login = async (userData) => {
 
 const logout = async () => {
   await signOut(auth);
-  localStorage.removeItem("user");
+  localStorage.removeItem('user');
 };
 
 const authService = {
@@ -518,45 +493,41 @@ const authService = {
 };
 
 export default authService;
-
 ```
-### authSlice.js
-```js
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService";
-import { auth } from "../../app/configs/firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
 
-let user = localStorage.getItem("user");
+### authSlice.js
+
+```js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import authService from './authService';
+import { auth } from '../../app/configs/firebase-config';
+import { onAuthStateChanged } from 'firebase/auth';
+
+let user = localStorage.getItem('user');
 
 const initialState = {
   user: user ? user : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
 };
 
 // Register user
-export const register = createAsyncThunk(
-  "auth/register",
-  async (user, thunkAPI) => {
-    try {
-      return await authService.register(user);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
+  try {
+    return await authService.register(user);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
 // Login user
-export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
@@ -568,19 +539,19 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   }
 });
 
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
 });
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     reset: (state) => {
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
-      state.message = "";
+      state.message = '';
     },
   },
   extraReducers: (builder) => {
@@ -621,7 +592,6 @@ export const authSlice = createSlice({
 
 export const { reset } = authSlice.actions;
 export default authSlice.reducer;
-
 ```
 
 ## Step 7: Setup Rest Api Consuming Slice
@@ -629,33 +599,33 @@ export default authSlice.reducer;
 ### Apislice.js
 
 ```js
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
-  reducerPath: "apiSlice",
+  reducerPath: 'apiSlice',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/",
+    baseUrl: 'http://localhost:8080/api/',
   }),
-  tagTypes: ["Video", "Category"],
+  tagTypes: ['Video', 'Category'],
   endpoints: (builder) => ({
     getVideos: builder.query({
-      query: () => "video/videolist",
-      providesTags: ["Video"],
+      query: () => 'video/videolist',
+      providesTags: ['Video'],
     }),
     getCategory: builder.query({
-      query: () => "category/categorylist",
-      providesTags: ["Category"],
+      query: () => 'category/categorylist',
+      providesTags: ['Category'],
     }),
     addNewVideo: builder.mutation({
       query: (payload) => ({
-        url: "video/addvideo",
-        method: "POST",
+        url: 'video/addvideo',
+        method: 'POST',
         body: payload,
         headers: {
-          "Content-type": "application/json; charset=UTF-8",
+          'Content-type': 'application/json; charset=UTF-8',
         },
       }),
-      invalidatesTags: ["Video"],
+      invalidatesTags: ['Video'],
     }),
     updateVideo: builder.mutation({
       query: (payload) => {
@@ -663,19 +633,19 @@ export const apiSlice = createApi({
         const { video_id, ...body } = payload;
         return {
           url: `video/editvideo/${video_id}`,
-          method: "PUT",
+          method: 'PUT',
           body,
         };
       },
-      invalidatesTags: ["Video"],
+      invalidatesTags: ['Video'],
     }),
     deleteVideo: builder.mutation({
       query: (id) => ({
         url: `video/deletevideo/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
         //credentials: 'include',
       }),
-      invalidatesTags: ["Video"],
+      invalidatesTags: ['Video'],
     }),
   }),
 });
@@ -687,51 +657,47 @@ export const {
   useUpdateVideoMutation,
   useDeleteVideoMutation,
 } = apiSlice;
-
 ```
 
 ## Step 8: Create extra components
 
 ### Modal.js
+
 ```js
-import Modal from "react-bootstrap/Modal";
-import ReactPlayer from "react-player";
+import Modal from 'react-bootstrap/Modal';
+import ReactPlayer from 'react-player';
 
 function VideoModal(props) {
   const url = '"' + props?.video?.video_url + '"';
   return (
     <Modal
       {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      dialogClassName="my-modal"
+      size='lg'
+      aria-labelledby='contained-modal-title-vcenter'
+      dialogClassName='my-modal'
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {props?.video?.title}
-        </Modal.Title>
+        <Modal.Title id='contained-modal-title-vcenter'>{props?.video?.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ReactPlayer url={url} width="100%" />
+        <ReactPlayer url={url} width='100%' />
       </Modal.Body>
     </Modal>
   );
 }
 export default VideoModal;
-
 ```
+
 ### Table.js
+
 ```js
-import { useState } from "react";
-import VideoModal from "./Modal";
-import Table from "react-bootstrap/Table";
-import Card from "react-bootstrap/Card";
-import { AiOutlinePlayCircle } from "react-icons/ai";
-import {
-  useGetVideosQuery,
-  useDeleteVideoMutation,
-} from "../features/api/apiSlice";
+import { useState } from 'react';
+import VideoModal from './Modal';
+import Table from 'react-bootstrap/Table';
+import Card from 'react-bootstrap/Card';
+import { AiOutlinePlayCircle } from 'react-icons/ai';
+import { useGetVideosQuery, useDeleteVideoMutation } from '../features/api/apiSlice';
 
 const VideoTable = ({ setInputField, setId, setUpdate }) => {
   const [deleteVideo] = useDeleteVideoMutation();
@@ -768,18 +734,18 @@ const VideoTable = ({ setInputField, setId, setUpdate }) => {
 
   if (isGetLoading) {
     videoContent = (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className='d-flex justify-content-center'>
+        <div className='spinner-border' role='status'>
+          <span className='visually-hidden'>Loading...</span>
         </div>
       </div>
     );
   } else if (isGetSuccess) {
     videoContent = (
       <>
-        <Card className="table-responsive">
-          <Table striped bordered className="mt-2 table-responsive table-sm">
-            <thead className="stuckhead">
+        <Card className='table-responsive'>
+          <Table striped bordered className='mt-2 table-responsive table-sm'>
+            <thead className='stuckhead'>
               <tr>
                 <th>Play</th>
                 <th>Title</th>
@@ -795,11 +761,8 @@ const VideoTable = ({ setInputField, setId, setUpdate }) => {
               {videos?.map((video) => (
                 <tr key={video.video_id}>
                   <td>
-                    {" "}
-                    <AiOutlinePlayCircle
-                      onClick={() => handleShowModal(video)}
-                      className="mx-2"
-                    />
+                    {' '}
+                    <AiOutlinePlayCircle onClick={() => handleShowModal(video)} className='mx-2' />
                   </td>
                   <td>
                     {video.title}
@@ -812,20 +775,17 @@ const VideoTable = ({ setInputField, setId, setUpdate }) => {
                   </td>
                   <td>{video.categories.category}</td>
                   <td>{video.video_duration}</td>
-                  <td>{video.video_url.slice(0, 20) + "..."}</td>
-                  <td>{video.description.slice(0, 20) + "..."}</td>
-                  <td className="d-flex justify-content-center">
-                    <button
-                      onClick={() => setVideoData(video)}
-                      className="btn btn-dark"
-                    >
+                  <td>{video.video_url.slice(0, 20) + '...'}</td>
+                  <td>{video.description.slice(0, 20) + '...'}</td>
+                  <td className='d-flex justify-content-center'>
+                    <button onClick={() => setVideoData(video)} className='btn btn-dark'>
                       Edit
                     </button>
                   </td>
-                  <td className="ms-3 px-3">
+                  <td className='ms-3 px-3'>
                     <button
                       onClick={() => deleteVideo(video.video_id)}
-                      className="btn btn-dark me-2"
+                      className='btn btn-dark me-2'
                     >
                       Remove
                     </button>
@@ -839,39 +799,40 @@ const VideoTable = ({ setInputField, setId, setUpdate }) => {
     );
   } else if (isGetError) {
     videoContent = (
-      <div className="alert alert-danger" role="alert">
+      <div className='alert alert-danger' role='alert'>
         {getError}
       </div>
     );
   }
 
   return (
-    <div className="row mt-4">
-      <div className="col-lg-12">
-        <div className="row">{videoContent}</div>
+    <div className='row mt-4'>
+      <div className='col-lg-12'>
+        <div className='row'>{videoContent}</div>
       </div>
     </div>
   );
 };
 
 export default VideoTable;
-
 ```
+
 ### Form.js
+
 ```js
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import Badge from "react-bootstrap/Badge";
-import { Card } from "react-bootstrap";
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import Badge from 'react-bootstrap/Badge';
+import { Card } from 'react-bootstrap';
 import {
   useGetCategoryQuery,
   useAddNewVideoMutation,
   useUpdateVideoMutation,
-} from "../features/api/apiSlice";
+} from '../features/api/apiSlice';
 
 const VideoForm = ({ setInputField, inputField, id, update, setUpdate }) => {
   const [addNewVideo] = useAddNewVideoMutation();
@@ -904,12 +865,12 @@ const VideoForm = ({ setInputField, inputField, id, update, setUpdate }) => {
       .unwrap()
       .then(() => {
         setInputField(() => ({
-          title: "",
-          category: "",
-          description: "",
-          avg_sessiontime: "",
-          video_duration: "",
-          video_url: "",
+          title: '',
+          category: '',
+          description: '',
+          avg_sessiontime: '',
+          video_duration: '',
+          video_url: '',
         }));
       })
       .then((error) => {
@@ -931,45 +892,43 @@ const VideoForm = ({ setInputField, inputField, id, update, setUpdate }) => {
     setUpdate(false);
 
     setInputField(() => ({
-      title: "",
-      category: "",
-      description: "",
-      avg_sessiontime: "",
-      video_duration: "",
-      video_url: "",
+      title: '',
+      category: '',
+      description: '',
+      avg_sessiontime: '',
+      video_duration: '',
+      video_url: '',
     }));
   };
 
   const handleReset = () => {
     setInputField(() => ({
-      title: "",
-      category: "",
-      description: "",
-      avg_sessiontime: "",
-      video_duration: "",
-      video_url: "",
+      title: '',
+      category: '',
+      description: '',
+      avg_sessiontime: '',
+      video_duration: '',
+      video_url: '',
     }));
   };
 
   const validationSchema = Yup.object({
     // category: Yup.string().required("Please select a product").oneOf(categories),
     title: Yup.string()
-      .required("Title can not be empty")
-      .max(10, "Title must not exceed 10 characters"),
-    description: Yup.string()
-      .required("Can't be empty")
-      .trim("Can't be empty string"),
-    category: Yup.string().required("Select a category"),
+      .required('Title can not be empty')
+      .max(10, 'Title must not exceed 10 characters'),
+    description: Yup.string().required("Can't be empty").trim("Can't be empty string"),
+    category: Yup.string().required('Select a category'),
     avg_sessiontime: Yup.string()
       .required("Can't be empty")
-      .matches(/[0-9]{2}:[0-9]{2}:[0-9]{2}/, "duration format- hh:mm:ss"),
+      .matches(/[0-9]{2}:[0-9]{2}:[0-9]{2}/, 'duration format- hh:mm:ss'),
     video_duration: Yup.string()
       .required("Can't be empty")
-      .matches(/[0-9]{2}:[0-9]{2}:[0-9]{2}/, "duration format- hh:mm:ss"),
+      .matches(/[0-9]{2}:[0-9]{2}:[0-9]{2}/, 'duration format- hh:mm:ss'),
     video_url: Yup.string()
       .required("Can't be empty")
-      .min(3, "Url is too short")
-      .url("invalid url"),
+      .min(3, 'Url is too short')
+      .url('invalid url'),
   });
 
   const formik = useFormik({
@@ -990,128 +949,112 @@ const VideoForm = ({ setInputField, inputField, id, update, setUpdate }) => {
     ));
   } else if (isGetError) {
     categoryOptions = <option> ... </option>;
-    console.log("error fetching category");
+    console.log('error fetching category');
     console.log(getError);
   }
 
   return (
-    <Card className="lefter p-2">
+    <Card className='lefter p-2'>
       <h3> Add Video</h3>
       <Form onSubmit={formik.handleSubmit}>
-        <Row className="mb-3 ">
-          <Col className="col-lg-8 col-12">
-            <FloatingLabel controlId="title" label="Title">
+        <Row className='mb-3 '>
+          <Col className='col-lg-8 col-12'>
+            <FloatingLabel controlId='title' label='Title'>
               <Form.Control
-                type="text"
-                name="title"
-                placeholder="Title"
+                type='text'
+                name='title'
+                placeholder='Title'
                 value={inputField.title}
                 onChange={inputsHandler}
               />
             </FloatingLabel>
-            <Badge bg="danger" className="mt-2">
+            <Badge bg='danger' className='mt-2'>
               {formik.errors.title ? formik.errors.title : null}
             </Badge>
           </Col>
-          <Col className="col-lg-4 col-12 mt-lg-0 mt-2">
-            <FloatingLabel controlId="category">
-              <Form.Select
-                name="category"
-                value={inputField.category}
-                onChange={inputsHandler}
-              >
+          <Col className='col-lg-4 col-12 mt-lg-0 mt-2'>
+            <FloatingLabel controlId='category'>
+              <Form.Select name='category' value={inputField.category} onChange={inputsHandler}>
                 <option>Category. . .</option>
                 {categoryOptions}
               </Form.Select>
             </FloatingLabel>
-            <Badge bg="danger" className="mt-2">
+            <Badge bg='danger' className='mt-2'>
               {formik.errors.category ? formik.errors.category : null}
             </Badge>
           </Col>
         </Row>
 
-        <Row className="mb-3">
-          <Col className="col-lg-3 col-12">
-            <FloatingLabel
-              controlId="avg_sessiontime"
-              label="Avg. Session Time"
-            >
+        <Row className='mb-3'>
+          <Col className='col-lg-3 col-12'>
+            <FloatingLabel controlId='avg_sessiontime' label='Avg. Session Time'>
               <Form.Control
-                name="avg_sessiontime"
-                type="text"
+                name='avg_sessiontime'
+                type='text'
                 value={inputField.avg_sessiontime}
-                placeholder="Avg. Session Time"
+                placeholder='Avg. Session Time'
                 onChange={inputsHandler}
               />
             </FloatingLabel>
-            <Badge bg="danger" className="mt-2 ">
-              {formik.errors.avg_sessiontime
-                ? formik.errors.avg_sessiontime
-                : null}
+            <Badge bg='danger' className='mt-2 '>
+              {formik.errors.avg_sessiontime ? formik.errors.avg_sessiontime : null}
             </Badge>
           </Col>
-          <Col className="col-lg-3 col-12 mt-lg-0 mt-2">
-            <FloatingLabel controlId="video_duration" label="Video Duration">
+          <Col className='col-lg-3 col-12 mt-lg-0 mt-2'>
+            <FloatingLabel controlId='video_duration' label='Video Duration'>
               <Form.Control
-                name="video_duration"
-                type="text"
+                name='video_duration'
+                type='text'
                 value={inputField.video_duration}
-                placeholder="Video Duration"
+                placeholder='Video Duration'
                 onChange={inputsHandler}
               />
             </FloatingLabel>
-            <Badge bg="danger" className="mt-2">
-              {formik.errors.video_duration
-                ? formik.errors.video_duration
-                : null}
+            <Badge bg='danger' className='mt-2'>
+              {formik.errors.video_duration ? formik.errors.video_duration : null}
             </Badge>
           </Col>
-          <Col className="col-lg-6 col-12 mt-lg-0 mt-2">
-            <FloatingLabel controlId="video_url" label="Video URL">
+          <Col className='col-lg-6 col-12 mt-lg-0 mt-2'>
+            <FloatingLabel controlId='video_url' label='Video URL'>
               <Form.Control
-                name="video_url"
-                type="text"
+                name='video_url'
+                type='text'
                 value={inputField.video_url}
-                placeholder="Video URL"
+                placeholder='Video URL'
                 onChange={inputsHandler}
               />
             </FloatingLabel>
-            <Badge bg="danger" className="mt-2">
+            <Badge bg='danger' className='mt-2'>
               {formik.errors.video_url ? formik.errors.video_url : null}
             </Badge>
           </Col>
         </Row>
 
-        <Row className="mb-1 p-3">
+        <Row className='mb-1 p-3'>
           {/* <FloatingLabel controlId="description" label="Description"> */}
           <Form.Control
-            name="description"
-            as="textarea"
-            placeholder="Description. . ."
+            name='description'
+            as='textarea'
+            placeholder='Description. . .'
             value={inputField.description}
             rows={3}
             onChange={inputsHandler}
           />
           {/* </FloatingLabel> */}
-          <Badge bg="danger" className="mt-2">
+          <Badge bg='danger' className='mt-2'>
             {formik.errors.description ? formik.errors.description : null}
           </Badge>
         </Row>
-      
 
-        <div className="d-flex flex-row-reverse">
-          <div className="p-2">
-            <button className="btn btn-primary me-2" type="submit">
-              {update ? "Update Video" : "Add Video"}
+        <div className='d-flex flex-row-reverse'>
+          <div className='p-2'>
+            <button className='btn btn-primary me-2' type='submit'>
+              {update ? 'Update Video' : 'Add Video'}
             </button>
           </div>
-          <div className="p-2">
-            {" "}
-            <button
-              onClick={handleReset}
-              className="btn btn-danger"
-              type="button"
-            >
+          <div className='p-2'>
+            {' '}
+            <button onClick={handleReset} className='btn btn-danger' type='button'>
               Clear
             </button>
           </div>
@@ -1122,7 +1065,6 @@ const VideoForm = ({ setInputField, inputField, id, update, setUpdate }) => {
 };
 
 export default VideoForm;
-
 ```
 
 ## Step 9:
@@ -1132,5 +1074,3 @@ run these commands on terminal
 ```js
 npm run dev
 ```
-
-

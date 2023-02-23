@@ -4,17 +4,20 @@ metaTitle: 'Redux and Redux toolkit advanced with axios'
 metaDesc: 'We will learn how to configure advanced features of  redux toolkit'
 socialImage: images/redux.jpg
 date: '2022-10-24'
+published: false
 tags:
   - react
   - redux
   - redux toolkit
   - blog
 ---
+
 # Introduction
+
 Redux toolkit advanced setup,almost a mini blog app, without api just create and read post with reaction and author names. This time we will use <strong> axios and Asyncthunk.</strong> we will skip basic setup files and jump right into the business section
 
-
 # Step 3: Create slices
+
 This time slices are different we will use axios to fetch data from external api endpoints
 
 <ul> 
@@ -119,8 +122,8 @@ const postsSlice = createSlice({
             })
             .addCase(addNewPost.fulfilled, (state, action) => {
                 // Fix for API post IDs:
-                // Creating sortedPosts & assigning the id 
-                // would be not be needed if the fake API 
+                // Creating sortedPosts & assigning the id
+                // would be not be needed if the fake API
                 // returned accurate new post IDs
                 const sortedPosts = state.posts.sort((a, b) => {
                     if (a.id > b.id) return 1
@@ -128,7 +131,7 @@ const postsSlice = createSlice({
                     return 0
                 })
                 action.payload.id = sortedPosts[sortedPosts.length - 1].id + 1;
-                // End fix for fake API post IDs 
+                // End fix for fake API post IDs
 
                 action.payload.userId = Number(action.payload.userId)
                 action.payload.date = new Date().toISOString();
@@ -155,7 +158,9 @@ export default postsSlice.reducer
 ```
 
 ### UserSlice
+
 Same case for user ,instead of initializing users we get data from api using axios
+
 ```
 iimport { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -188,6 +193,7 @@ export default usersSlice.reducer
 # Step 2: USe the global states now in components
 
 Now let's go through file intro,
+
 <ol>
 <li> we need <strong>postform</strong> for creating new post </li>
 <li> we need <strong>postlist</strong> for viewing created post </li>
@@ -200,15 +206,14 @@ Bonus Features::
 <li>another added feature is sorting the post by latest entry</li>
 </ul>
 
-
-
 ### PostForm
+
 First we fetched all authors so that we can add them in select list using <strong> selectAllUsers</strong>
-We then mapped author names in  <strong> userOptions </strong>
+We then mapped author names in <strong> userOptions </strong>
 We used states so that we can track values while filling forms
 We tracked changes using e.target.value and set them to their states
 We saved post when title and content is not empty and called dispatch <strong> postAdded</strong> and cleared values afterwards
-We disabled the save button until all value are selected using <strong>canSave </strong> boolean 
+We disabled the save button until all value are selected using <strong>canSave </strong> boolean
 
 ```
 import { useState } from "react";
@@ -294,9 +299,10 @@ const AddPostForm = () => {
 export default AddPostForm
 ```
 
-
 ### PostAuthor
+
 we got state values from <strong> selectAllUsers </strong> , if user is missing we used ternary operator to set unknown author.
+
 ```
 import { useSelector } from "react-redux";
 import { selectAllUsers } from "../users/usersSlice";
@@ -312,7 +318,9 @@ export default PostAuthor
 ```
 
 ### PostList
+
 we got state values from <strong> selectAllPosts </strong> , we sorted posts by latest date mapped all data valuesm this time we add two more case if data fetching is failed then show error and if it is in loading state then let loading show
+
 ```
 import { useSelector, useDispatch } from "react-redux";
 import { selectAllPosts, getPostsStatus, getPostsError, fetchPosts } from "./postsSlice";
@@ -355,7 +363,9 @@ export default PostsList
 ## Helper Files
 
 ### PostExcerpt
+
 This new file will shape post body with reactions and author names and post time ago feature.
+
 ```
 import PostAuthor from "./PostAuthor";
 import TimeAgo from "./TimeAgo";
@@ -376,8 +386,11 @@ const PostsExcerpt = ({ post }) => {
 }
 export default PostsExcerpt
 ```
-### ReactionButtons 
+
+### ReactionButtons
+
 For operations of reactions
+
 ```
 import { useDispatch } from "react-redux";
 import { reactionAdded } from "./postsSlice";
@@ -414,7 +427,9 @@ export default ReactionButtons
 ```
 
 ### TimeAgo
+
 For time ago feature
+
 ```
 import { parseISO, formatDistanceToNow } from 'date-fns';
 

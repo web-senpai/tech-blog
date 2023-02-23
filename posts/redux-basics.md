@@ -4,11 +4,13 @@ metaTitle: 'Redux api calling with RTK Query'
 metaDesc: 'We will learn how to connect server with react client using redux and rtk'
 socialImage: images/redux.jpg
 date: '2022-10-24'
+published: false
 tags:
   - react
   - redux
   - RTK query
 ---
+
 ## Configure Store.js
 
 ```
@@ -27,7 +29,9 @@ export const store = configureStore({
 setupListeners(store.dispatch)
 
 ```
+
 ## Configure ApiSlice
+
 ```
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -210,6 +214,7 @@ export const PostsList = () => {
 ```
 
 ### Getting Single things
+
 ```
 import React from 'react'
 import { Link } from 'react-router-dom'
