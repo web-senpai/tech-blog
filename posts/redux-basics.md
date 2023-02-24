@@ -1,297 +1,227 @@
 ---
-title: 'Redux api calling with RTK Query'
-metaTitle: 'Redux api calling with RTK Query'
-metaDesc: 'We will learn how to connect server with react client using redux and rtk'
+title: 'Modernizing Redux: The Bits and Pieces You Need for Beginner-Friendly Development'
+metaTitle: 'Simplifying Redux Development: Essential Tips for Beginners'
+metaDesc: 'Learn how to modernize your Redux development approach with essential bits and pieces to simplify and streamline your code. Perfect for beginners, this guide offers practical tips and best practices for building robust and maintainable Redux applications.'
 socialImage: images/redux.jpg
 date: '2022-10-24'
-published: false
+published: true
 tags:
-  - react
-  - redux
-  - RTK query
+  - React
+  - Redux
+  - State Management
+  - JavaScript
+  - Beginner-Friendly
+  - Development
+  - Best Practices
+  - Tips and Tricks
+  - Code Optimization
+  - Frontend Development
 ---
 
-## Configure Store.js
+### Intro : RTK Query
 
+RTK Query is a powerful library that simplifies data fetching and state management in React and Redux applications. With RTK Query, you can define a single endpoint definition that encapsulates the entire data fetching logic for a particular API endpoint, including caching, polling, and error handling. This allows you to eliminate much of the boilerplate code associated with data fetching and focus on the core logic of your application. Additionally, RTK Query automatically generates Redux actions and selectors for you, making it easy to integrate with your existing Redux store. Overall, RTK Query can significantly reduce the amount of code you need to write and improve the performance and maintainability of your React and Redux applications.
+
+### Comparison With Other Options
+
+RTK Query, React Query, and SWR are all popular data fetching libraries for React applications, and each has its own strengths and weaknesses.
+
+React Query is focused on providing an intuitive API and powerful caching capabilities. It offers a clean, declarative API that makes it easy to handle complex data fetching scenarios such as pagination, infinite scrolling, and optimistic updates. However, React Query does not have built-in support for Redux, so integrating it with an existing Redux store can be more challenging.
+
+SWR, on the other hand, is optimized for performance and offers a simple, lightweight API. It uses a unique approach to caching that leverages stale-while-revalidate to provide fast updates without sacrificing data accuracy. However, SWR does not offer the same level of customization and flexibility as RTK Query and React Query.
+
+RTK Query, meanwhile, offers a powerful combination of simplicity, performance, and flexibility. Its API is designed to be easy to use and easy to integrate with existing Redux stores, and it provides advanced features such as automatic polling and efficient batch updates. RTK Query also provides a built-in mechanism for handling mutations, which can simplify the process of updating data in your backend. Additionally, RTK Query is part of the Redux Toolkit, a comprehensive library for building Redux applications, which provides a cohesive set of tools and best practices for building robust and maintainable Redux applications.
+
+Overall, while each library has its own strengths, RTK Query stands out for its combination of ease of use, performance, and flexibility, making it a great choice for many React and Redux applications.
+
+### Step 1: Install the Required Dependencies
+
+First, you need to install the required dependencies for RTK Query. Open your project's terminal and run the following command:
+
+```js
+npm install @reduxjs/toolkit react-redux @reduxjs/toolkit/query @reduxjs/toolkit/query/react
 ```
-import { configureStore } from '@reduxjs/toolkit'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import { apiSlice } from '../features/api/apiSlice'
 
-export const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
-})
+### Step 2: Create a Service
 
-setupListeners(store.dispatch)
+Next, you need to create a service that defines your API endpoints. A service is a plain JavaScript object that contains a set of functions that return the API endpoints. Each endpoint is defined using the endpoint function provided by RTK Query.
 
-```
+Here's an example service that defines a set of endpoints for a sample REST API:
 
-## Configure ApiSlice
+```js
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-```
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export const apiSlice = createApi({
-  reducerPath: "apiSlice",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/",
-  }),
-  tagTypes: [
-    "InventoryCount",
-    "InventoryItem",
-    "Snapshot",
-    "Employees",
-    "Grades",
-    "Inventories",
-    "InventoryItems",
-    "SnapshotItems",
-  ],
+const sampleApi = createApi({
+  reducerPath: 'sampleApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com' }),
   endpoints: (builder) => ({
-    getInventoryCount: builder.query({
-      query: () => "inventory-counts/",
-      providesTags: ["InventoryCount"],
+    getPosts: builder.query({
+      query: () => '/posts',
     }),
-    getInventoryCountItems: builder.query({
-      query: (inventoryId) => `inventory-item/${inventoryId}`,
+    getPost: builder.query({
+      query: (id) => `/posts/${id}`,
     }),
-    getReadyDevices: builder.query({
-      query: (inventoryId) => `inventory-item/devices/${inventoryId}`,
-    }),
-    getSnapshots: builder.query({
-      query: () => "snapshot/",
-      providesTags: ["Snapshot"],
-    }),
-    getEmployees: builder.query({
-      query: () => "snapshot/employees",
-      providesTags: ["Employees"],
-    }),
-    getGrades: builder.query({
-      query: () => "snapshot/grades",
-      providesTags: ["Grades"],
-    }),
-    getSections: builder.query({
-      query: () => "snapshot/sections",
-      providesTags: ["Sections"],
-    }),
-    getInventories: builder.query({
-      query: () => "snapshot/inventories",
-      providesTags: ["Inventories"],
-    }),
-    getInventoryItems: builder.query({
-      query: (id) => `snapshot/inventory-items/${id}`,
-      providesTags: ["InventoryItems"],
-    }),
-    getSnapshotInventoryItems: builder.query({
-      query: (id) => `snapshot/snapshot-items/${id}`,
-      providesTags: ["SnapshotItems"],
-    }),
-    createNewInventoryCount: builder.mutation({
-      query: (payload) => ({
-        url: "inventory-counts/",
-        method: "POST",
-        body: payload,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+    addPost: builder.mutation({
+      query: (post) => ({
+        url: '/posts',
+        method: 'POST',
+        body: post,
       }),
-      invalidatesTags: ["InventoryCount"],
     }),
-    createNewSnapshot: builder.mutation({
-      query: (payload) => ({
-        url: "snapshot/",
-        method: "POST",
-        body: payload,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+    updatePost: builder.mutation({
+      query: ({ id, ...post }) => ({
+        url: `/posts/${id}`,
+        method: 'PUT',
+        body: post,
       }),
-      invalidatesTags: ["Snapshot"],
     }),
-    updateInventoryCount: builder.mutation({
-      query: (payload) => {
-        console.log(payload);
-        const { id, ...body } = payload;
-        return {
-          url: `inventory-counts/${id}`,
-          method: "PUT",
-          body,
-        };
-      },
-      invalidatesTags: ["InventoryCount"],
-    }),
-    deleteSnapshot: builder.mutation({
+    deletePost: builder.mutation({
       query: (id) => ({
-        url: `snapshot/${id}`,
-        method: "DELETE"
+        url: `/posts/${id}`,
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Snapshot"],
     }),
   }),
 });
 
 export const {
-  useGetSnapshotsQuery,
-  useGetEmployeesQuery,
-  useGetGradesQuery,
-  useGetSectionsQuery,
-  useGetInventoriesQuery,
-  useGetInventoryItemsQuery,
-  useGetSnapshotInventoryItemsQuery,
-  useGetInventoryCountQuery,
-  useGetInventoryCountItemsQuery,
-  useGetReadyDevicesQuery,
-  useCreateNewInventoryCountMutation,
-  useCreateNewSnapshotMutation,
-  useDeleteSnapshotMutation,
-  useUpdateInventoryCountMutation,
-} = apiSlice;
-
+  useGetPostsQuery,
+  useGetPostQuery,
+  useAddPostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+} = sampleApi;
 ```
 
-## Call created api's in file
+In this example, we define five endpoints using the builder.query and builder.mutation functions provided by RTK Query. The query function defines the endpoint's URL and method, while the mutation function defines the endpoint's URL, method, and body.
 
-### Getting queries
+### Step 3: Use the Service in Your Component
 
-```
-import React from 'react'
-import { Link } from 'react-router-dom'
+Once you have defined your service, you can use it in your React component using the hooks provided by RTK Query. Here's an example of how to use the useGetPostsQuery hook to fetch a list of posts from the API:
 
-import { Spinner } from '../../components/Spinner'
-import { PostAuthor } from './PostAuthor'
-import { TimeAgo } from './TimeAgo'
-import { ReactionButtons } from './ReactionButtons'
+#### Read data
 
-import { useGetPostsQuery } from '../api/apiSlice'
+```js
+import { useGetPostsQuery } from './sampleApi';
 
-let PostExcerpt = ({ post }) => {
-  return (
-    <article className="post-excerpt" key={post.id}>
-      <h3>{post.title}</h3>
-      <div>
-        <PostAuthor userId={post.user} />
-        <TimeAgo timestamp={post.date} />
-      </div>
-      <p className="post-content">{post.content.substring(0, 100)}</p>
-
-      <ReactionButtons post={post} />
-      <Link to={`/posts/${post.id}`} className="button muted-button">
-        View Post
-      </Link>
-    </article>
-  )
-}
-
-export const PostsList = () => {
-  const {
-    data: posts,
-    isLoading,
-    isSuccess,
-    isError,
-    error
-  } = useGetPostsQuery()
-
-  let content
+function PostList() {
+  const { data, error, isLoading } = useGetPostsQuery();
 
   if (isLoading) {
-    content = <Spinner text="Loading..." />
-  } else if (isSuccess) {
-    content = posts.map(post => <PostExcerpt key={post.id} post={post} />)
-  } else if (isError) {
-    content = <div>{error.toString()}</div>
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
   }
 
   return (
-    <section className="posts-list">
-      <h2>Posts</h2>
-      {content}
-    </section>
-  )
+    <ul>
+      {data.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
 }
 ```
 
-### Getting Single things
+In this example, we use the useGetPostsQuery hook to fetch a list of posts from the API. The hook returns an object that contains the data, error, and isLoading properties. We use these properties to display the data in the component.
 
-```
-import React from 'react'
-import { Link } from 'react-router-dom'
+### Step 4: Use Other Hooks for CRUD Operations
 
-import { Spinner } from '../../components/Spinner'
-import { useGetPostQuery } from '../api/apiSlice'
+Similarly, you can use the other hooks provided by RTK Query to perform CRUD operations. Here are some examples:
 
-import { PostAuthor } from './PostAuthor'
-import { TimeAgo } from './TimeAgo'
-import { ReactionButtons } from './ReactionButtons'
+- useGetPostQuery: Fetch a single post by ID.
+- useAddPostMutation: Add a new post.
+- useUpdatePostMutation: Update a post by ID.
+- useDeletePostMutation: Delete a post by ID.
 
-export const SinglePostPage = ({ match }) => {
-  const { postId } = match.params
+Here's an example of how to use the useAddPostMutation, useDeletePostMutation and useUpdatePostMutation hooks to add and update a post:
 
-  const { data: post, isFetching, isSuccess } = useGetPostQuery(postId)
+```js
+import { useState } from 'react';
+import {
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+  usePostsQuery,
+} from './sampleApi';
 
-  let content
+function PostList() {
+  const { data: posts = [], isFetching } = usePostsQuery();
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
+  const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
+  const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
+
+  const handleCreate = () => {
+    createPost({ title, body });
+    setTitle('');
+    setBody('');
+  };
+
+  const handleUpdate = () => {
+    updatePost({ id: selectedPost.id, title, body });
+    setSelectedPost(null);
+    setTitle('');
+    setBody('');
+  };
+
+  const handleDelete = (postId) => {
+    deletePost(postId);
+  };
+
+  const handleEdit = (post) => {
+    setSelectedPost(post);
+    setTitle(post.title);
+    setBody(post.body);
+  };
+
   if (isFetching) {
-    content = <Spinner text="Loading..." />
-  } else if (isSuccess) {
-    content = (
-      <article className="post">
-        <h2>{post.title}</h2>
-        <div>
-          <PostAuthor userId={post.user} />
-          <TimeAgo timestamp={post.date} />
-        </div>
-        <p className="post-content">{post.content}</p>
-        <ReactionButtons post={post} />
-        <Link to={`/editPost/${post.id}`} className="button">
-          Edit Post
-        </Link>
-      </article>
-    )
+    return <p>Loading...</p>;
   }
 
-  return <section>{content}</section>
+  return (
+    <>
+      <h2>Create Post</h2>
+      <div>
+        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <textarea value={body} onChange={(e) => setBody(e.target.value)} />
+        <button type='button' onClick={handleCreate} disabled={isCreating}>
+          {isCreating ? 'Creating...' : 'Create'}
+        </button>
+        {selectedPost && (
+          <button type='button' onClick={handleUpdate} disabled={isUpdating}>
+            {isUpdating ? 'Updating...' : 'Update'}
+          </button>
+        )}
+      </div>
+
+      <h2>Posts</h2>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+            <button type='button' onClick={() => handleEdit(post)} disabled={isUpdating}>
+              {isUpdating && selectedPost.id === post.id ? 'Updating...' : 'Edit'}
+            </button>
+            <button type='button' onClick={() => handleDelete(post.id)} disabled={isDeleting}>
+              {isDeleting ? 'Deleting...' : 'Delete'}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
 ```
 
-### Creating new things query
+In this example, we define all three mutations (useCreatePostMutation, useUpdatePostMutation, and useDeletePostMutation) and use them in the PostList component. We also define state variables for title, body, and selectedPost.
 
-```
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+We use the handleCreate function to create a new post when the "Create" button is clicked, and the handleUpdate function to update an existing post when the "Update" button is clicked. The handleDelete function is used to delete a post by ID.
 
-import { Spinner } from '../../components/Spinner'
-import { useAddNewPostMutation } from '../api/apiSlice'
-import { selectAllUsers } from '../users/usersSlice'
-
-export const AddPostForm = () => {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [userId, setUserId] = useState('')
-
-  const [addNewPost, { isLoading }] = useAddNewPostMutation()
-  const users = useSelector(selectAllUsers)
-
-  const onTitleChanged = e => setTitle(e.target.value)
-  const onContentChanged = e => setContent(e.target.value)
-  const onAuthorChanged = e => setUserId(e.target.value)
-
-  const canSave = [title, content, userId].every(Boolean) && !isLoading
-
-  const onSavePostClicked = async () => {
-    if (canSave) {
-      try {
-        await addNewPost({ title, content, user: userId }).unwrap()
-        setTitle('')
-        setContent('')
-        setUserId('')
-      } catch (err) {
-        console.error('Failed to save the post: ', err)
-      }
-    }
-  }
-
-  // omit rendering logic
-}
-```
+The handleEdit function is used to populate the form fields with the data of the post being edited. We conditionally render the "Update" button only when a post is being edited, and disable the "Edit" and "Delete" buttons while the corresponding mutation is in progress.

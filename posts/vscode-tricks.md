@@ -8,13 +8,16 @@ published: true
 tags: -vscode
 ---
 
-## Keyboard shortcuts
+### Keyboard shortcuts
 
-- **Ctrl + G>** - Goto line
-- **Ctrl + Alt + l** - Console log (turbo space)
-- **Alt + Shift + d** - Console log delete (turbo space)
-- **Alt + Shift + u** - Console log uncomment (turbo space)
-- **Alt + Shift + c** - Console log comment (turbo space)
+Using keyboard shortcuts in Visual Studio Code (VS Code) can greatly enhance your coding productivity and save you time. Instead of manually navigating through the menus, keyboard shortcuts allow you to quickly execute commands and perform tasks, such as opening and closing files, searching for code, or debugging your application.
+
+With practice and familiarity, keyboard shortcuts can become second nature, allowing you to focus on the task at hand and avoid distractions caused by menu navigation. Additionally, using keyboard shortcuts can reduce the strain on your hands and wrists, as you can avoid repetitive mouse movements and clicks.
+
+Overall, mastering keyboard shortcuts in VS Code can help you work faster and more efficiently, allowing you to spend more time coding and less time on repetitive tasks.
+**Some Useful Shortcuts Are Mentioned Below -**
+
+- **Ctrl + G** - Goto line
 - **Alt + ↑** - Take line to upper
 - **Alt + ↓** - Take line to lower
 - **Ctrl + L** - Select whole line
@@ -23,7 +26,14 @@ tags: -vscode
 - **Alt + Shift + ↑ or Alt + Shift + ↓** - Copy line above or down
 - **Ctrl + ]** - Indent lines
 - **Ctrl + [** - Outdent lines
-- **Ctrl + Alt + ->** - Move code to new tab group
+- **Ctrl + Alt + ->(Arrow Keys)** - Move code to new tab group
+
+#### Use these with vscode plugins ->
+
+- **Ctrl + Alt + l** - Console log (turbo console log)
+- **Alt + Shift + d** - Console log delete (turbo console log)
+- **Alt + Shift + u** - Console log uncomment (turbo console log)
+- **Alt + Shift + c** - Console log comment (turbo console log)
 
 ## Top Vscode Extentions
 
@@ -43,12 +53,14 @@ tags: -vscode
 ## Snippets
 
 1. ES7, React, Redux & GraphQL Snippets
+2. Tailwind Css Intellisense
 
 ## Path
 
 1. Path intellisense [For completing filepath’s]
 2. Path AutoComplete
 3. npm intellisense
+4. Auto import
 
 ## Tags
 
@@ -72,11 +84,12 @@ tags: -vscode
 
 1. Prettier
 2. Bracket Pair Colorizer
+3. Inline fold (For tailwind)
 
 ## Debugging
 
 1. Live server
-2. Turbo space
+2. Turbo console log
 3. Emoji snippets
 4. GitLens
 5. Githistory
@@ -87,12 +100,19 @@ tags: -vscode
 
 1. Todo tree
 2. Better Comments
+3. Sapling(React hierarchy )
 
 ## Copilot
 
 1. Tabnine
+2. Github Copilot
 
-### Config:
+## Speedy coding
+
+1. Glean(React Refactor)
+2. Multiple cursor case preserve
+
+#### Todo Tree Config:
 
 ```
 "todo-tree.highlights.defaultHighlight": {
