@@ -28,8 +28,8 @@ export default function Layout({ children }) {
     <div className='flex flex-col min-h-screen'>
       <header className='bg-slate-900 text-white font-mono  py-4 sticky top-0 z-50'>
         <div className='container mx-auto flex justify-center'>
-          <Link href='/'>
-            <a className='ml-4'>💻</a>
+          <Link href='/' className='ml-4'>
+            💻
           </Link>
           <span className='mx-auto'>Samir&apos;s late night thoughts</span>{' '}
         </div>

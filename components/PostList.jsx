@@ -181,42 +181,44 @@ const PostList = ({ posts }) => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paginatedPosts.map(({ slug, frontmatter }) => (
-              <Link href={`/post/${slug}`} key={slug}>
-                <a className="group flex flex-col rounded-2xl border border-gray-200 shadow-sm overflow-hidden bg-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                  {/* Banner image */}
-                  <div className="relative w-full h-48 bg-gray-100">
-                    <Image
-                      layout="fill"
-                      objectFit="cover"
-                      alt={frontmatter.title}
-                      src={`/${frontmatter.socialImage}`}
-                    />
-                  </div>
+              <Link
+                href={`/post/${slug}`}
+                key={slug}
+                className="group flex flex-col rounded-2xl border border-gray-200 shadow-sm overflow-hidden bg-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              >
+                {/* Banner image */}
+                <div className="relative w-full h-48 bg-gray-100">
+                  <Image
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    alt={frontmatter.title}
+                    src={`/${frontmatter.socialImage}`}
+                  />
+                </div>
 
-                  {/* Card body */}
-                  <div className="p-5 flex flex-col gap-2 flex-1">
-                    <h2 className="text-base font-semibold leading-snug text-gray-900 group-hover:text-indigo-600 transition-colors">
-                      {frontmatter.title}
-                    </h2>
-                    {frontmatter.metaDesc && (
-                      <p className="text-sm text-gray-500 leading-relaxed">
-                        {truncate(frontmatter.metaDesc)}
-                      </p>
-                    )}
-                    {getTags(frontmatter).length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-auto pt-3">
-                        {getTags(frontmatter).slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-medium"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </a>
+                {/* Card body */}
+                <div className="p-5 flex flex-col gap-2 flex-1">
+                  <h2 className="text-base font-semibold leading-snug text-gray-900 group-hover:text-indigo-600 transition-colors">
+                    {frontmatter.title}
+                  </h2>
+                  {frontmatter.metaDesc && (
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      {truncate(frontmatter.metaDesc)}
+                    </p>
+                  )}
+                  {getTags(frontmatter).length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mt-auto pt-3">
+                      {getTags(frontmatter).slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </Link>
             ))}
           </div>
