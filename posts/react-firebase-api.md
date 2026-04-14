@@ -5,16 +5,17 @@ metaDesc: 'Learn how to implement secure authentication in your React-Firebase a
 socialImage: images/react.jpg
 date: '2022-08-16'
 published: true
-tags: -React
-  -Firebase
-  -Web Development
-  -Authentication
-  -Security
-  -User Interface
-  -Cloud Functions
-  -Real-time Database
-  -JavaScript
-  -Web Applications
+tags:
+  - React
+  - Firebase
+  - Web Development
+  - Authentication
+  - Security
+  - User Interface
+  - Cloud Functions
+  - Real-time Database
+  - JavaScript
+  - Web Applications
 ---
 
 ## Secure Authentication with React and Firebase: A Comprehensive Guide

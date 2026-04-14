@@ -2,10 +2,11 @@
 title: 'Mastering VS Code: Sneaky Tips and Tricks for Beginner Coders'
 metaTitle: 'VsCode Tips and Tricks'
 metaDesc: 'We will learn how vscode makes life easy'
-socialImage: images/react.jpg
+socialImage: images/vscode.png
 date: '2022-10-24'
 published: true
-tags: -vscode
+tags:
+  - VSCode
 ---
 
 ### Keyboard shortcuts
